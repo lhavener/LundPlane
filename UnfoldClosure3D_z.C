@@ -100,7 +100,7 @@ void UnfoldClosure(std::string file, std::string var, std::string sd, std::strin
   h1_true->SetMarkerStyle(20);
   h1_true->SetMarkerSize(1);
   std::cout << h1_true->GetBinLowEdge(1) << endl;
-  h1_true->GetXaxis()->SetRangeUser(20, 120);
+  h1_true->GetXaxis()->SetRangeUser(20, 220);
   h1_true->Draw();
   leg->AddEntry(h1_true, "Prior split");
   h1_uf_i1->SetLineColor(kRed);
@@ -165,7 +165,7 @@ void UnfoldClosure(std::string file, std::string var, std::string sd, std::strin
   h1_i3toi1->GetXaxis()->SetLabelSize(0.045);
   h1_i3toi1->GetYaxis()->SetLabelSize(0.045);
   h1_i3toi1->GetYaxis()->SetRangeUser(0.8, 1.2);
-  h1_i3toi1->GetXaxis()->SetRangeUser(20, 120);
+  h1_i3toi1->GetXaxis()->SetRangeUser(20, 220);
   h1_i3toi1->GetYaxis()->SetNdivisions(606);
   h1_i3toi1->SetTitle("Closure test");
   h1_i3toi1->GetXaxis()->SetTitle("#it{p}_{T}");
@@ -194,7 +194,7 @@ void UnfoldClosure(std::string file, std::string var, std::string sd, std::strin
   p2->Draw();
 
   std::stringstream ss;
-  ss << "figures/Closurez_" << x1 << "to" << x2 << "_dR" << y1 << "to" << y2 << "_" << sd << "_" << date << ".pdf";
+  ss << "figures_full/Closurez_" << x1 << "to" << x2 << "_dR" << y1 << "to" << y2 << "_" << sd << "_" << date << ".pdf";
   c->SaveAs(ss.str().c_str());
   ss.str("");
   

@@ -99,7 +99,7 @@ void UnfoldClosure(std::string file, std::string var, std::string sd, std::strin
   h1_true->SetMarkerStyle(20);
   h1_true->SetMarkerSize(1);
   std::cout << h1_true->GetBinLowEdge(1) << endl;
-  h1_true->GetXaxis()->SetRangeUser(-1, 1.5);
+  h1_true->GetXaxis()->SetRangeUser(-1, 3.0);
   h1_true->Draw();
   leg->AddEntry(h1_true, "Prior split");
   h1_uf_i1->SetLineColor(kRed);
@@ -135,7 +135,7 @@ void UnfoldClosure(std::string file, std::string var, std::string sd, std::strin
   leg->Draw("same");
   leg2->Draw("same");
   //  if (pt1 == 4)
-  lat->DrawLatex(0.93, 0.88, "20 < #it{p}_{T} < 120 GeV/c");
+  lat->DrawLatex(0.93, 0.88, "20 < #it{p}_{T} < 220 GeV/c");
   //  else lat->DrawLatex(0.93, 0.88, "80 < #it{p}_{T} < 120 GeV/c");
   //  if (cent == "semi") lat->DrawLatex(0.93, 0.83, "30-50%");
   //  else if (cent == "cent") lat->DrawLatex(0.93, 0.83, "0-10%");
@@ -165,7 +165,7 @@ void UnfoldClosure(std::string file, std::string var, std::string sd, std::strin
   h1_i3toi1->GetXaxis()->SetLabelSize(0.045);
   h1_i3toi1->GetYaxis()->SetLabelSize(0.045);
   h1_i3toi1->GetYaxis()->SetRangeUser(0.8, 1.2);
-  h1_i3toi1->GetXaxis()->SetRangeUser(-1, 1.5);
+  h1_i3toi1->GetXaxis()->SetRangeUser(-1, 3.0);
   h1_i3toi1->GetYaxis()->SetNdivisions(606);
   h1_i3toi1->SetTitle("Closure test");
   h1_i3toi1->GetXaxis()->SetTitle("ln(#it{k}_{T})");
@@ -194,7 +194,7 @@ void UnfoldClosure(std::string file, std::string var, std::string sd, std::strin
   p2->Draw();
 
   std::stringstream ss;
-  ss << "figures/Closurey_" << x1 << "to" << x2 << "_dR" << y1 << "to" << y2 << "_" << sd << "_" << date << ".pdf";
+  ss << "figures_full/Closurey_" << x1 << "to" << x2 << "_dR" << y1 << "to" << y2 << "_" << sd << "_" << date << ".pdf";
   c->SaveAs(ss.str().c_str());
   ss.str("");
   

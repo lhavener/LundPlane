@@ -134,7 +134,7 @@ void UnfoldClosure(std::string file, std::string var, std::string sd, std::strin
   leg2->AddEntry(h1_uf_i9, "i = 9");
   leg->Draw("same");
   leg2->Draw("same");
-  lat->DrawLatex(0.93, 0.88, "20 < #it{p}_{T} < 120 GeV/c");
+  lat->DrawLatex(0.93, 0.88, "20 < #it{p}_{T} < 220 GeV/c");
   //  else lat->DrawLatex(0.93, 0.88, "80 < #it{p}_{T} < 120 GeV/c");
   //  if (cent == "semi") lat->DrawLatex(0.93, 0.83, "30-50%");
   //  else if (cent == "cent") lat->DrawLatex(0.93, 0.83, "0-10%");
@@ -193,7 +193,7 @@ void UnfoldClosure(std::string file, std::string var, std::string sd, std::strin
   p2->Draw();
 
   std::stringstream ss;
-  ss << "figures/Closurex_" << x1 << "to" << x2 << "_dR" << y1 << "to" << y2 << "_" << sd << "_" << date << ".pdf";
+  ss << "figures_full/Closurex_" << x1 << "to" << x2 << "_dR" << y1 << "to" << y2 << "_" << sd << "_" << date << ".pdf";
   c->SaveAs(ss.str().c_str());
   ss.str("");
   
