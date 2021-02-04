@@ -1,6 +1,6 @@
 # LundPlane
 
-Split MC closure test scrips: UnfoldClosure_(x,y,z).C evaluates the closure in each of the projections of the lund plane
+Split MC closure test scripts: UnfoldClosure_(x,y,z).C evaluates the closure in each of the projections of the lund plane
 
 arguments: UnfoldClosure(std::string file, std::string var, std::string sd, std::string date, int x1, int x2, int y1, int y2)
 
