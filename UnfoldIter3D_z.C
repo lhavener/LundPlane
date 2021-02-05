@@ -98,6 +98,7 @@ void UnfoldIter(std::string file, std::string sd, std::string date, int x1, int 
   h1_true->SetMaximum(h1_true->GetMaximum()*2);
   h1_true->SetMarkerStyle(20);
   h1_true->SetMarkerSize(1);
+  h1_true->GetXaxis()->SetRangeUser(20, 220);
   h1_true->Draw();
   leg->AddEntry(h1_true, "Generator");
   h1_uf_i1->SetLineColor(kRed);
@@ -145,6 +146,7 @@ void UnfoldIter(std::string file, std::string sd, std::string date, int x1, int 
   h1_i3toi1->GetYaxis()->SetLabelSize(0.045);
   h1_i3toi1->GetYaxis()->SetNdivisions(404);
   h1_i3toi1->GetYaxis()->SetRangeUser(0.6, 1.4);
+  h1_i3toi1->GetXaxis()->SetRangeUser(20, 220);
   h1_i3toi1->SetTitle("Ratio unfolded to 5 iterations");
   h1_i3toi1->GetXaxis()->SetTitle("#it{p}_{T}");
   h1_i3toi1->GetYaxis()->SetTitle("Ratio to i=5");
@@ -159,7 +161,7 @@ void UnfoldIter(std::string file, std::string sd, std::string date, int x1, int 
   h1_i9toi3->Divide(h1_uf_i5);
   h1_i9toi3->Draw("same");
 
-  TLine* line = new TLine(0, 1, 160, 1);
+  TLine* line = new TLine(20, 1, 220, 1);
   line->SetLineStyle(2);
   line->SetLineWidth(3);
   line->Draw("same"); 
@@ -169,7 +171,7 @@ void UnfoldIter(std::string file, std::string sd, std::string date, int x1, int 
   p2->Draw();
 
   std::stringstream ss;
-  ss << "figures/Unfolded3Dz_" << x1 << "to" << x2 << "_"<< y1 << "to" << y2 << "_" << sd << "_" << date << ".pdf";
+  ss << "figures_full/Unfolded3Dz_" << x1 << "to" << x2 << "_"<< y1 << "to" << y2 << "_" << sd << "_" << date << ".pdf";
   c->SaveAs(ss.str().c_str());
   ss.str("");
   

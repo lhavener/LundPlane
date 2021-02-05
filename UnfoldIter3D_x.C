@@ -133,7 +133,7 @@ void UnfoldIter(std::string file, std::string sd, std::string date, int x1, int 
   leg2->AddEntry(h1_uf_i9, "i = 9");
   leg->Draw("same");
   leg2->Draw("same");
-    lat->DrawLatex(0.93, 0.88, "20 < #it{p}_{T} < 120 GeV/c");
+  lat->DrawLatex(0.93, 0.88, "20 < #it{p}_{T} < 220 GeV/c");
   
 
   p2->cd();
@@ -170,7 +170,7 @@ void UnfoldIter(std::string file, std::string sd, std::string date, int x1, int 
   p2->Draw();
 
   std::stringstream ss;
-  ss << "figures/Unfolded3Dx_" << x1 << "to" << x2 << "_"<< y1 << "to" << y2 << "_" << sd << "_" << date << ".pdf";
+  ss << "figures_full/Unfolded3Dx_" << x1 << "to" << x2 << "_"<< y1 << "to" << y2 << "_" << sd << "_" << date << ".pdf";
   c->SaveAs(ss.str().c_str());
   ss.str("");
   

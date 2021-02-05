@@ -134,7 +134,7 @@ void UnfoldIter(std::string file, std::string sd, std::string date, int x1, int 
   leg->Draw("same");
   leg2->Draw("same");
   //  if (sd == "sd1")
-  lat->DrawLatex(0.93, 0.88, "20 < #it{p}_{T} < 120 GeV/c");
+  lat->DrawLatex(0.93, 0.88, "20 < #it{p}_{T} < 220 GeV/c");
   //  else if (sd == "sd2") lat->DrawLatex(0.93, 0.78, "Soft Drop z = 0.2");
   //  else if (sd == "sd4") lat->DrawLatex(0.93, 0.78, "Soft Drop z = 0.4");
 
@@ -172,7 +172,7 @@ void UnfoldIter(std::string file, std::string sd, std::string date, int x1, int 
   p2->Draw();
 
   std::stringstream ss;
-  ss << "figures/Unfolded3Dy_" << x1 << "to" << x2 << "_"<< y1 << "to" << y2 << "_" << sd << "_" << date << ".pdf";
+  ss << "figures_full/Unfolded3Dy_" << x1 << "to" << x2 << "_"<< y1 << "to" << y2 << "_" << sd << "_" << date << ".pdf";
   c->SaveAs(ss.str().c_str());
   ss.str("");
   
