@@ -44,15 +44,40 @@ void Lund(std::string file, std::string type, float min, float max, float pt1, f
     }
   
   h3->GetZaxis()->SetRange(bin1, bin2);
-  TH2D* h2 = (TH2D*)h3->Project3D("yx");
-  h2->Sumw2();
+  TH2D* h2old = (TH2D*)h3->Project3D("yx");
+  h2old->SetName("h2old");
+  h2old->Sumw2();
   float tot = h1->Integral(bin1, bin2);
-  std::cout << "tot" << tot << std::endl;
-  std::cout << h2->Integral() << std::endl;
-  std::cout << h2->Integral()/tot << std::endl;
-  h2->Scale(1./tot, "width");
-  std::cout << h2->Integral() << std::endl;
+  //  std::cout << "tot" << tot << std::endl;
+  //  std::cout << h2->Integral() << std::endl;
+  //  std::cout << h2->Integral()/tot << std::endl;
+  h2old->Scale(1./tot, "width");
+  //  std::cout << h2->Integral() << std::endl;
 
+  TH3D* h3_raw = (TH3D*)f->Get("raw");
+  TH1D* h1_raw = (TH1D*)f->Get("h1_raw");
+  h3_raw->GetZaxis()->SetRange(1,4);
+  TH2D* h2_raw = (TH2D*)h3_raw->Project3D("yx");
+  h2_raw->SetName("h2_raw");
+  float tot_raw = h1_raw->Integral(1,4);
+  h2_raw->Scale(1./tot_raw, "width");
+
+  TH2D* h2 = (TH2D*)h2_raw->Clone("h2");
+  h2->Reset();
+  for (int i = 1; i <= h2->GetNbinsX(); i++)
+    {
+      for (int j = 1; j <= h2->GetNbinsY(); j++)
+	{
+	  h2->SetBinContent(i, j, h2old->GetBinContent(i, j+1));
+	  h2->GetYaxis()->SetRangeUser(-1, 1.5);
+	}
+    }
+  h2->GetXaxis()->SetRangeUser(0, 1.4);
+  h2->Divide(h2_raw);
+
+
+
+  
   Int_t res = TColor::CreateGradientColorTable(NRGBs, stops, red, green, blue, NCont);
   gStyle->SetNumberContours(NCont);
 
@@ -88,24 +113,22 @@ void Lund(std::string file, std::string type, float min, float max, float pt1, f
 
   h2->GetXaxis()->SetTitleSize(0.05);
   h2->GetXaxis()->SetTitleOffset(1.0);
-  h2->GetZaxis()->SetTitleOffset(1.2);
   h2->GetYaxis()->SetTitleOffset(0.8);
   h2->GetXaxis()->SetLabelSize(0.05);					   
   // h2_data->GetXaxis()->SetLabelOffset(1.0);					   
   h2->GetYaxis()->SetLabelSize(0.05);					   
   h2->GetXaxis()->SetTitle("ln(#it{R}/#Delta#it{R})");
-  h2->GetXaxis()->SetRangeUser(0, 1.4);
+  
   h2->GetYaxis()->SetTitleSize(0.055);
-  h2->GetZaxis()->SetTitleSize(0.04);
+  h2->GetZaxis()->SetTitleSize(0.05);
   h2->GetZaxis()->SetLabelSize(0.05);
   h2->GetYaxis()->SetLabelOffset(0.01);
   h2->GetXaxis()->SetLabelOffset(0.01);
-  h2->GetZaxis()->SetLabelOffset(0.01);
   //  h2_data->GetXaxis()->SetRangeUser(0, 0.5);
   //  h1_data->GetYaxis()->SetRangeUser(0, h1_data->GetMaximum()*1.2);  
   h2->GetYaxis()->SetTitle("ln(#it{k}_{T}/GeV)");
-  h2->GetZaxis()->SetTitle("(1/#it{N}_{jets})d^{2}#it{N}_{emissions}/(dln(#it{k}_{T}/GeV)dln(#it{R}/#Delta#it{R}))");
-  h2->GetYaxis()->SetRangeUser(-1, 1.5);
+  //  h2->GetZaxis()->SetTitle("(1/#it{N}_{jets})d^{2}#it{N}_{emissions}/(dln(#it{k}_{T})dln(#it{R}/#Delta#it{R})) Unfolded/Raw");
+  h2->GetZaxis()->SetTitle("Unfolded/Raw");
   h2->SetTitle("");
   if (max != -1) h2->SetMaximum(max);
   if (min != -1) h2->SetMinimum(min);
@@ -145,7 +168,7 @@ void Lund(std::string file, std::string type, float min, float max, float pt1, f
 
 
   
-  ss << "figures/LundPlane_";
+  ss << "figures/LundPlane_UFtoRaw_";
   ss << type << "_";
   ss << date << ".pdf";
   c->SaveAs(ss.str().c_str());

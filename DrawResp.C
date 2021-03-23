@@ -31,9 +31,9 @@ void DrawResp(std::string file, std::string tag, int det, int part, std::string 
 	}
       else
 	{
-	  if (part == 1) {h3->GetXaxis()->SetRange(1,5); ss << "-1.0 < ln(k_{T}^{reco}) < 0.";}
-	  else if (part == 2) {h3->GetXaxis()->SetRange(6, 8); ss << "0. < ln(k_{T}^{reco}) < 1.0";}
-	  else if (part == 3) {h3->GetXaxis()->SetRange(9, 11); ss << "1.0 < ln(k_{T}^{reco}) < 1.5";}
+	  if (part == 1) {h3->GetXaxis()->SetRange(1,5); ss << "-1.0 < ln(k_{T}^{reco}/GeV) < 0.";}
+	  else if (part == 2) {h3->GetXaxis()->SetRange(6, 8); ss << "0. < ln(k_{T}^{reco}/GeV) < 1.0";}
+	  else if (part == 3) {h3->GetXaxis()->SetRange(9, 11); ss << "1.0 < ln(k_{T}^{reco}/GeV) < 1.5";}
 	}
     }
 
@@ -54,15 +54,15 @@ void DrawResp(std::string file, std::string tag, int det, int part, std::string 
   ss.str("");
   if (tag == "z")
     {
-      h2->GetXaxis()->SetTitle("ln(#it{k}_{T}^{true})");
-      h2->GetYaxis()->SetTitle("ln(#it{k}_{T}^{reco})");
+      h2->GetXaxis()->SetTitle("ln(#it{k}_{T}^{true}/GeV)");
+      h2->GetYaxis()->SetTitle("ln(#it{k}_{T}^{reco}/GeV)");
     }
   else
     {
       h2->GetXaxis()->SetTitle("ln(#it{R}/#Delta#it{R}^{true})");
       h2->GetYaxis()->SetTitle("ln(#it{R}/#Delta#it{R}^{reco})");
     }
-  h2->GetZaxis()->SetTitle("Counts");
+  h2->GetZaxis()->SetTitle("Normalized Counts");
   h2->Draw("colz");
 
   TLatex* lat = new TLatex();
@@ -71,12 +71,12 @@ void DrawResp(std::string file, std::string tag, int det, int part, std::string 
   lat->SetTextSize(0.045);
   lat->SetTextAlign(11);
   lat->DrawLatex(0.15, 0.95, "ALICE Preliminary");
-  lat->DrawLatex(0.15, 0.90, "PYTHIA8 pp #sqrt{s_{NN}} = 13 TeV");
+  lat->DrawLatex(0.15, 0.90, "PYTHIA8 pp #sqrt{#it{s}_{NN}} = 13 TeV");
   lat->DrawLatex(0.15, 0.83, "#it{R} = 0.4, |#it{#eta}_{jet}| < 0.5");
   lat->SetTextAlign(31);
   lat->DrawLatex(0.85, 0.95, "Charged-particle jets anti-#it{k}_{T}");
   lat->DrawLatex(0.85, 0.90, "20 < #it{p}_{T, ch jet} < 120 GeV/#it{c}");
-  if (tag == "theta") lat->DrawLatex(0.85, 0.83, "#font[122]{-}1.0 < ln(#it{k}_{T}^{true, reco}) < 1.5 GeV/#it{c}");
+  if (tag == "theta") lat->DrawLatex(0.85, 0.83, "#font[122]{-}1.0 < ln(#it{k}_{T}^{true, reco}/GeV) < 1.5");
   else lat->DrawLatex(0.85, 0.83, "#font[122]{-}1.0 < ln(#it{R}/#Delta#it{R}^{true, reco}) < 1.4");
   ss << "figures/Resp_" << tag;
   if (det != -1) ss << "_det" << det;

@@ -6,23 +6,24 @@ void EvaluateSys(int pt1, int pt2, int y1, int y2, bool ifpp);
 void EvaluateSys(int pt1, int pt2, int y1, int y2, bool ifpp)
 {
   //  std::string file_nom = "Unfold_nom_test_Dec6.root";
-  std::string file_nom = "Unfold_nom_Feb23.root";
+  std::string file_nom = "Unfold_FastSimPythia_fastsim_Feb28.root";
   std::string file_nom2 = "Unfold_nom_test_Dec5.root";
   std::string file_matchup = "Unfold3DLund_matchup_Nov8.root";
   std::string file_matchdown = "Unfold3DLund_matchdown_Nov8.root";
   std::string file_truncup = "Unfold_nom_truncup_test_Dec4.root";
   std::string file_truncdown = "Unfold_nom_truncup_test_Dec4.root";
   std::string file_rw = "Unfold_nom_rw_Dec6.root";
-  std::string file_herwig2 = "Unfold_nom_herwig_outlier2_Dec10.root";
+  std::string file_herwig2 = "Unfold_FastSimHerwig_fastsim_Feb28.root";
+  std::string file_herwig3 = "Unfold_nom_herwig_Dec6.root";
   std::string file_eff = "Unfold3DLund_eff_Nov16.root";
   std::string file_close = "UnfoldSplit_rwdata_Dec5.root";
   std::string file_sherpa = "SherpaHistograms_Ahadic.root";
   std::string file_sherpaL = "SherpaHistograms_lundstring.root";
   std::string file_herwig = "HerwigHistogramsPartLevel.root";
-  std::string shherhist = "histokt";
-  if (y1 == 2) shherhist = "histokt_wide";
-  if (y1 == 5) shherhist = "histokt_narrow";
-  
+  std::string shherhist = "histoR";
+  if (y1 == 7) shherhist = "histoR_p";
+  if (y2 == 6) shherhist = "histoR_np";
+
   std::string histnamecluf = "Bayesian_Unfoldediter5"; 
   std::string histnamecltrue = "true_match"; 
 
@@ -74,7 +75,7 @@ void EvaluateSys(int pt1, int pt2, int y1, int y2, bool ifpp)
   histvec_up.push_back(iter.first);
   histvec_down.push_back(iter.second);
 
-   TFile* fnom2 = new TFile(file_nom2.c_str());
+  TFile* fnom2 = new TFile(file_nom2.c_str());
   TH3D* h2_nom2 = (TH3D*)fnom2->Get(histname.c_str());
   h2_nom2->SetName("h2_nom2");
   TH1D* h1_norm2 = (TH1D*)fnom2->Get(hist1Dname.c_str());
@@ -93,7 +94,6 @@ void EvaluateSys(int pt1, int pt2, int y1, int y2, bool ifpp)
   h1_norm2->Divide(heff_norm2);
   TH1D* h1_nom2 = (TH1D*)Norm(h2_nom2, y1, y2, pt1, pt2, "h1_nom2", h1_norm2);
   histvec.push_back(h1_nom2);
-
   
   TFile* fmatchup = new TFile(file_matchup.c_str());
   TH3D* h2_matchup = (TH3D*)fmatchup->Get(histname.c_str());
@@ -136,7 +136,7 @@ void EvaluateSys(int pt1, int pt2, int y1, int y2, bool ifpp)
   std::pair<TH1D*, TH1D*> match = CalculateDeltaCut(h1_matchup, h1_matchdown, h1_matchdown, true);
   histvec_up.push_back(match.first);
   histvec_down.push_back(match.second);
-  
+
   TFile* ftruncup = new TFile(file_truncup.c_str());
   TH3D* h2_truncup = (TH3D*)ftruncup->Get(histname.c_str());
   h2_truncup->SetName("h2_truncup");
@@ -156,7 +156,7 @@ void EvaluateSys(int pt1, int pt2, int y1, int y2, bool ifpp)
   h1_norm_truncup->Divide(heff_norm_truncup);                                                                                                                            
   TH1D* h1_truncup = (TH1D*)Norm(h2_truncup, y1, y2, pt1, pt2, "h1_truncup", h1_norm_truncup);
   histvec.push_back(h1_truncup);
-  TFile* ftruncdown = new TFile(file_truncdown.c_str());
+   TFile* ftruncdown = new TFile(file_truncdown.c_str());
   TH3D* h2_truncdown = (TH3D*)ftruncdown->Get(histname.c_str());
   h2_truncdown->SetName("h2_truncdown");
   TH1D* h1_norm_truncdown = (TH1D*)ftruncdown->Get(hist1Dname.c_str());
@@ -172,12 +172,13 @@ void EvaluateSys(int pt1, int pt2, int y1, int y2, bool ifpp)
   TH1D* heff_norm_truncdown_den = (TH1D*)ftruncdown->Get(eff1Ddenname.c_str());
   heff_norm_truncdown_den->SetName("heff_norm_truncdown_den");
   heff_norm_truncdown->Divide(heff_norm_truncdown_den);
-  h1_norm_truncdown->Divide(heff_norm_truncdown);
+  h1_norm_truncdown->Divide(heff_norm_truncdown);                                                                                                                        
   TH1D* h1_truncdown = (TH1D*)Norm(h2_truncdown, y1, y2, pt1, pt2, "h1_truncdown", h1_norm_truncdown);
   histvec.push_back(h1_truncdown);
-  std::pair<TH1D*, TH1D*> trunc = CalculateDeltaCut(h1_nom, h1_truncup, h1_truncdown, true);
+  std::pair<TH1D*, TH1D*> trunc = CalculateDeltaCut(h1_nom2, h1_truncup, h1_truncdown, true);
   histvec_up.push_back(trunc.first);
   histvec_down.push_back(trunc.second);
+
   
   TFile* frw = new TFile(file_rw.c_str());
   TH3D* h2_rw = (TH3D*)frw->Get(histname.c_str());
@@ -227,7 +228,6 @@ void EvaluateSys(int pt1, int pt2, int y1, int y2, bool ifpp)
   histvec_up.push_back(herwig.first);
   histvec_down.push_back(herwig.second);
 
-
   TFile* feff = new TFile(file_eff.c_str());
   TH3D* h2_eff = (TH3D*)feff->Get(histname.c_str());
   h2_eff->SetName("h2_eff");
@@ -254,17 +254,15 @@ void EvaluateSys(int pt1, int pt2, int y1, int y2, bool ifpp)
   TFile* fclose = new TFile(file_close.c_str());
   TH3D* h2_close = (TH3D*)fclose->Get(histnamecluf.c_str());
   h2_close->SetName("h2_close");
-  TH1D* h1_norm_close = (TH1D*)h2_close->ProjectionZ("h1_norm_close", y1, y2, 2, 12);
+  TH1D* h1_norm_close = (TH1D*)h2_close->ProjectionZ("h1_norm_close", 1, 7, y1, y2);
   TH1D* h1_close = (TH1D*)Norm(h2_close, y1, y2, pt1, pt2, "h1_close", h1_norm_close);
   histvec.push_back(h1_close);
   TH3D* h2_close1 = (TH3D*)fclose->Get(histnamecltrue.c_str());
   h2_close1->SetName("h2_close1");
-  TH1D* h1_norm2_close = (TH1D*)h2_close1->ProjectionZ("h1_norm2_close", y1, y2, 2, 12);
+  TH1D* h1_norm2_close = (TH1D*)h2_close1->ProjectionZ("h1_norm2_close", 1, 7, y1, y2);
   TH1D* h1_close1 = (TH1D*)Norm(h2_close1, y1, y2, pt1, pt2, "h1_close1", h1_norm2_close);
   histvec.push_back(h1_close1);
   std::pair<TH1D*, TH1D*> close = CalculateDeltaCut(h1_close1, h1_close, h1_close, true);
-  //  close.first->Smooth();
-  //  close.second->Smooth();
   histvec_up.push_back(close.first);
   histvec_down.push_back(close.second);
   
@@ -274,41 +272,38 @@ void EvaluateSys(int pt1, int pt2, int y1, int y2, bool ifpp)
   TH3D* h2_true = (TH3D*)fnom->Get("truef");
   h2_true->SetName("h2_true");
   TH1D* h1_true_norm = (TH1D*)fnom->Get("h1_fulleff");
-  TH1D* h1_true = (TH1D*)h2_true->ProjectionY("h1_true", y1, y2, pt1, pt2);
-  double dx = h2_true->GetXaxis()->GetBinUpEdge(y2) - h2_true->GetXaxis()->GetBinLowEdge(y1);
+  TH1D* h1_true = (TH1D*)h2_true->ProjectionX("h1_true", y1, y2, pt1, pt2);
+  double dx = h2_true->GetYaxis()->GetBinUpEdge(y2) - h2_true->GetYaxis()->GetBinLowEdge(y1);
   h1_true->Scale(1./(h1_true_norm->Integral(pt1, pt2)*dx), "width");
   TH1D* h_ratio = (TH1D*)h1_true->Clone("h1_nom_ratio");
   h_ratio->Divide(h1_nom);
   //else h_ratio->Divide(h1_pp);
 
   TFile* fsherpa = new TFile(file_sherpa.c_str());
-  //  TH3D* h2_true_sherpa = (TH3D*)fsherpa->Get("h3_sherpa");                                                                                                             
-  //  TH1D* h1_norm_sherpa = (TH1D*)fsherpa->Get("fHLundIterative_proj_2");                                                                                                
-  //  TH1D* h1_sherpa = (TH1D*)h2_true_sherpa->ProjectionX("h1_true_sherpa", y1, y2, pt1, pt2);                                                                            
-  //  int pt12 = h1_norm_sherpa->GetXaxis()->FindBin(h2_true_sherpa->GetZaxis()->GetBinCenter(pt1));                                                                       
-  //  int pt22 = h1_norm_sherpa->GetXaxis()->FindBin(h2_true_sherpa->GetZaxis()->GetBinCenter(pt2));                                                                       
-  //  double dxs = h2_true_sherpa->GetYaxis()->GetBinUpEdge(y2) - h2_true_sherpa->GetYaxis()->GetBinLowEdge(y1);                                                           
-  //  h1_sherpa->Scale(1./(h1_norm_sherpa->Integral(pt12, pt22)*dxs), "width");                                                                                            
+  //  TH3D* h2_true_sherpa = (TH3D*)fsherpa->Get("h3_sherpa");
+  //  TH1D* h1_norm_sherpa = (TH1D*)fsherpa->Get("fHLundIterative_proj_2");
+  //  TH1D* h1_sherpa = (TH1D*)h2_true_sherpa->ProjectionX("h1_true_sherpa", y1, y2, pt1, pt2);
+  //  int pt12 = h1_norm_sherpa->GetXaxis()->FindBin(h2_true_sherpa->GetZaxis()->GetBinCenter(pt1));
+  //  int pt22 = h1_norm_sherpa->GetXaxis()->FindBin(h2_true_sherpa->GetZaxis()->GetBinCenter(pt2));
+  //  double dxs = h2_true_sherpa->GetYaxis()->GetBinUpEdge(y2) - h2_true_sherpa->GetYaxis()->GetBinLowEdge(y1);
+  //  h1_sherpa->Scale(1./(h1_norm_sherpa->Integral(pt12, pt22)*dxs), "width");
   TH1D* h1_sherpa = (TH1D*)fsherpa->Get(shherhist.c_str());
   h1_sherpa->SetName("h1_sherpa");
+  h1_sherpa->GetXaxis()->SetRange(1, 7);
   TH1D* h_ratio_sherpa = (TH1D*)h1_sherpa->Clone("h1_sherpa_ratio");
   h_ratio_sherpa->Divide(h1_nom);
 
-  std::cout << "before sherpa parton" << std::endl;
-  
-   TFile* fsherpaL = new TFile(file_sherpaL.c_str());
+  TFile* fsherpaL = new TFile(file_sherpaL.c_str());
   TH1D* h1_sherpaL = (TH1D*)fsherpaL->Get(shherhist.c_str());
   h1_sherpaL->SetName("h1_sherpaL");
-  //  h1_sherpaL->GetXaxis()->SetRange(1, 7);
+  h1_sherpaL->GetXaxis()->SetRange(1, 7);
   TH1D* h_ratio_sherpaL = (TH1D*)h1_sherpaL->Clone("h1_sherpaL_ratio");
   h_ratio_sherpaL->Divide(h1_nom);
 
-  std::cout << "before herwig" << std::endl;
-  
   TFile* fherwig2 = new TFile(file_herwig.c_str());
   TH1D* h1_herwig = (TH1D*)fherwig2->Get(shherhist.c_str());
   h1_herwig->SetName("h1_herwig");
-  //  h1_herwig->GetXaxis()->SetRange(1, 7);
+  h1_herwig->GetXaxis()->SetRange(1, 7);
   TH1D* h_ratio_herwig = (TH1D*)h1_herwig->Clone("h1_herwig_ratio");
   h_ratio_herwig->Divide(h1_nom);
   
@@ -327,8 +322,8 @@ void EvaluateSys(int pt1, int pt2, int y1, int y2, bool ifpp)
   TGraphAsymmErrors* h1_ratio_one_err = MakeError(h1_nom_err, h1_mc_err, h_ratio_one);
 
   std::stringstream name;
-  name << "Resultslnkt_";
-  name << y1 << "to" << y2 << "_" << pt1 <<"to" <<pt2 << "_Feb23.root";
+  name << "Resultslnr_";
+  name << y1 << "to" << y2 << "_" << pt1 <<"to" <<pt2 << "_fastsim_Mar1.root";
 
   TFile* fout = new TFile(name.str().c_str(), "recreate");
   fout->cd("/");
@@ -339,10 +334,10 @@ void EvaluateSys(int pt1, int pt2, int y1, int y2, bool ifpp)
   h_ratio->Write();
   h1_sherpa->Write();
   h1_sherpaL->Write();
-  h1_herwig->Write();
-  h1_herwig2->Write();
   h_ratio_sherpa->Write();
   h_ratio_sherpaL->Write();
+  h1_herwig->Write();
+  h1_herwig2->Write();
   h_ratio_herwig->Write();
   h_ratio_one->Write();
   h1_ratio_one_err->Write();
@@ -360,9 +355,9 @@ void EvaluateSys(int pt1, int pt2, int y1, int y2, bool ifpp)
 TH1D* Norm(TH3D* h2, int y1, int y2, int pt1, int pt2, std::string name, TH1D* h1)
 {
   
-  TH1D* h = (TH1D*)h2->ProjectionY(name.c_str(), y1, y2, pt1, pt2);
+  TH1D* h = (TH1D*)h2->ProjectionX(name.c_str(), y1, y2, pt1, pt2);
   std::string effname;
-  double dx = h2->GetXaxis()->GetBinUpEdge(y2) - h2->GetXaxis()->GetBinLowEdge(y1);
+  double dx = h2->GetYaxis()->GetBinUpEdge(y2) - h2->GetYaxis()->GetBinLowEdge(y1);
   h->Scale(1./(h1->Integral(pt1, pt2)*dx), "width");
   return h;
 }

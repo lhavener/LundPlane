@@ -68,7 +68,7 @@ void PureEff(std::string file, std::string file2, std::string date, std::string 
   h2_eff->GetXaxis()->SetTitleOffset(1.0);
   h2_eff->GetYaxis()->SetTitleOffset(0.8);
   if (axis == "x") h2_eff->GetXaxis()->SetTitle("ln(#it{R}/#Delta#it{R})");
-  else   h2_eff->GetXaxis()->SetTitle("ln(#it{k}_{T})");
+  else   h2_eff->GetXaxis()->SetTitle("ln(#it{k}_{T}/GeV)");
   if (axis == "x") h2_eff->GetXaxis()->SetRangeUser(0, 1.4);
   else   h2_eff->GetXaxis()->SetRangeUser(-1, 1.5);
   h2_eff->GetYaxis()->SetTitleSize(0.055);

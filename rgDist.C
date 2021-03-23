@@ -95,7 +95,7 @@ void rgDist_UF(std::string file_data, std::string date, int pt1, int pt2, int y1
   leg->SetFillColor(0);
   leg->SetBorderSize(0);
   leg->SetTextFont(42);
-  leg->SetTextSize(0.045);
+  leg->SetTextSize(0.04);
   // leg->SetNDC(true);
   TLatex* lat = new TLatex();
   lat->SetTextFont(42);
@@ -118,13 +118,13 @@ void rgDist_UF(std::string file_data, std::string date, int pt1, int pt2, int y1
   
 
   h1_data->GetXaxis()->SetTitleSize(0.05);
-  h1_data->GetYaxis()->SetTitleOffset(1.6);
+  h1_data->GetYaxis()->SetTitleOffset(1.9);
   h1_data->GetXaxis()->SetLabelSize(0.05);					   
   h1_data->GetXaxis()->SetLabelOffset(0.95);					   
   h1_data->GetYaxis()->SetLabelSize(0.05);					   
   h1_data->GetXaxis()->SetTitle("#it{R}_{g}");
-  h1_data->GetYaxis()->SetTitleSize(0.05);
-  h1_data->GetYaxis()->SetTitle("#frac{1}{#it{N}_{jets}} #frac{d#it{N}_{emissions}}{dln(#it{k}_{T})dln(#it{R}/#Delta#it{R})}");
+  h1_data->GetYaxis()->SetTitleSize(0.04);
+  h1_data->GetYaxis()->SetTitle("#frac{1}{#it{N}_{jets}} #frac{d#it{N}_{emissions}}{dln(#it{k}_{T}/GeV)dln(#it{R}/#Delta#it{R})}");
   h1_data->GetXaxis()->SetTickLength(h1_data->GetYaxis()->GetTickLength()*0.5);
   h1_data->GetYaxis()->SetTickLength(h1_data->GetYaxis()->GetTickLength()*1.5);
   h1_data->SetLineColor(kBlack);
@@ -198,7 +198,7 @@ void rgDist_UF(std::string file_data, std::string date, int pt1, int pt2, int y1
   lat->SetTextAlign(11);
   if (y1 == 2) ss << "#font[122]{-}1.0";
   else if (y1 == 7) ss << "0";
-  ss << " < ln(#it{k}_{T}) < ";
+  ss << " < ln(#it{k}_{T}/GeV) < ";
   if (y2 == 12) ss << "1.5";
   else if (y2 == 6) ss << "0";
   lat->DrawLatex(0.22, 0.455, ss.str().c_str());
@@ -206,8 +206,9 @@ void rgDist_UF(std::string file_data, std::string date, int pt1, int pt2, int y1
   if (y1 == 2) ss << "0.4";
   else if (y1 == 7) ss << "1.0";
   ss << " < #it{k}_{T} < ";
-  if (y2 == 12) ss << "2.7";
+  if (y2 == 12) ss << "4.5";
   else if (y2 == 6) ss << "1.0";
+  ss << " GeV/#it{c}";
   lat->DrawLatex(0.22, 0.415, ss.str().c_str());
   
   //  lat->DrawLatex(0.92, 0.61, "Soft Drop #it{z}_{cut} = 0.2, #it{#beta} = 0");
@@ -328,6 +329,6 @@ void rgDist_UF(std::string file_data, std::string date, int pt1, int pt2, int y1
     
     
     ss << "figures/lnRDist_" << pt1 << "to" << pt2 << "_" << y1 << "to" << y2;
-  ss << "_" << date << ".png";
+  ss << "_" << date << ".pdf";
   c->SaveAs(ss.str().c_str());
 }
