@@ -1,5 +1,9 @@
 # LundPlane
 
+**Unfolding
+
+In order to perform the unfolding, the RooSimple3DPbPb_match.cxx must be ran over all the MC files. Then the output should added together and the unfolding is performed using Unfold.C. Here the arguments are file_data and file_mc. The file_mc is the combined file. The file_data is one of the individual files before adding them together (since the data is ran over each time and we only need to access the data once). 
+
 **Split MC closure test scripts: UnfoldClosure_(x,y,z).C evaluates the closure in each of the projections of the lund plane
 
 arguments: UnfoldClosure(std::string file, std::string var, std::string sd, std::string date, int x1, int x2, int y1, int y2)
