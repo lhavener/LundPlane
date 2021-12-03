@@ -1,5 +1,17 @@
 # LundPlane
 
+**the RooSimple3DPbPb_match.cxx must be ran over all the MC files
+
+RooSimple3DPbPb_match(TString cFiles2="files1.txt", std::string tag = "", std::string date = "", int pthard = 1)
+//list arguments 
+cFiles2: the list of MC files
+tag: way to specify different systematics vs. the nominal result. "nom" run the nominal setting which should be good for now 
+date: a way to date the output files (you could put anything here, just a way I used to name files and keep track of output)
+pthard: a way to specify which pthard bin you are using in the analysis, it is only used to name the output file so not really needed 
+
+line 164: put the name of your data output here 
+line 172: used for an unfolding systematic for reweighting the response
+
 **Unfolding
 
 In order to perform the unfolding, the RooSimple3DPbPb_match.cxx must be ran over all the MC files. Then the output should added together and the unfolding is performed using Unfold.C. Here the arguments are file_data and file_mc. The file_mc is the combined file. The file_data is one of the individual files before adding them together (since the data is ran over each time and we only need to access the data once). 
